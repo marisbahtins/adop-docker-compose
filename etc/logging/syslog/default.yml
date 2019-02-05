@@ -113,9 +113,3 @@ nexus:
   log_opt:
     syslog-address: "udp://${LOGSTASH_HOST}:25826"
     tag: "nexus"
-
-registry:
-  log_driver: "syslog"
-  log_opt:
-    syslog-address: "udp://${LOGSTASH_HOST}:25826"
-    tag: "registry"
