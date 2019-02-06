@@ -90,24 +90,6 @@ jenkins-slave:
     syslog-address: "udp://${LOGSTASH_HOST}:25826"
     tag: "jenkins-slave"
 
-selenium-hub:
-  log_driver: "syslog"
-  log_opt:
-    syslog-address: "udp://${LOGSTASH_HOST}:25826"
-    tag: "selenium-hub"
-
-selenium-node-chrome:
-  log_driver: "syslog"
-  log_opt:
-    syslog-address: "udp://${LOGSTASH_HOST}:25826"
-    tag: "selenium-node-chrome"
-
-selenium-node-firefox:
-  log_driver: "syslog"
-  log_opt:
-    syslog-address: "udp://${LOGSTASH_HOST}:25826"
-    tag: "selenium-node-firefox"
-
 nexus:
   log_driver: "syslog"
   log_opt:

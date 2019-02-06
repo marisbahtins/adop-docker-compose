@@ -69,17 +69,7 @@ jenkins:
   volume_driver: nfs
   volumes:
     - ${NFS_HOST}/nfs/jenkins_home:/var/jenkins_home 
-
-selenium-node-chrome:
-  volume_driver: nfs
-  volumes:
-    - ${NFS_HOST}/nfs/selenium_config:/var/selenium-config
-
-selenium-node-firefox:
-  volume_driver: nfs
-  volumes:
-    - ${NFS_HOST}/nfs/selenium_config:/var/selenium-config
-
+    
 nexus:
   volume_driver: nfs
   volumes:
