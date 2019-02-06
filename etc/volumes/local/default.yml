@@ -10,17 +10,16 @@ ldap:
 
 gitlab-postgresql:
   volumes:
-    - gitlab_postgresql_data:/var/lib/postgresql:rw
-
-gitlab:
-  volumes:
-    - gitlab_config:/etc/gitlab:rw
-    - gitlab_logs:/var/log/gitlab:rw
-    - gitlab_data:/var/opt/gitlab:rw
+    - gitlab_postgresql_data:/var/lib/postgresql:Z
 
 gitlab-redis:
   volumes:
-    - gitlab_redis_data:/data
+    - gitlab_redis_data:/var/lib/redis:Z
+
+gitlab:
+  volumes:
+    - ./test/gitlab/tmp/:/home/git/data/tmp:Z
+    - gitlab_config:/home/git/data:Z
 
 sensu-api:
   volumes:

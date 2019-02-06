@@ -41,26 +41,31 @@ ldap:
     SLAPD_DOMAIN: ${LDAP_DOMAIN}
     SLAPD_FULL_DOMAIN: ${LDAP_FULL_DOMAIN}
 
+gitlab-redis:
+  container_name: gitlab-redis
+  restart: always
+  image: sameersbn/redis:4.0.9-1
+  net: ${CUSTOM_NETWORK_NAME}
+  expose:
+    - "6379"
+
 gitlab-postgresql:
   container_name: gitlab-postgresql
   restart: always
-  image: postgres:9.6.9-alpine
+  image: sameersbn/postgresql:10
   net: ${CUSTOM_NETWORK_NAME}
   expose:
     - "5432"
   environment:
-    POSTGRES_USER: ${GITLAB_POSTGRES_USER}
-    POSTGRES_PASSWORD: ${PASSWORD_POSTGRESQL}
-    POSTGRES_DB: ${GITLAB_POSTGRES_DB}
+    DB_USER: ${GITLAB_POSTGRES_USER}
+    DB_PASS: ${GITLAB_POSTGRES_PASSWORD}
+    DB_NAME: ${GITLAB_POSTGRES_DB}
+    DB_EXTENSION: pg_trgm
 
 gitlab:
   container_name: gitlab
   restart: always
-  image: accenture/adop-gitlab:0.1.1
-  hostname: gitlab
-  links:
-    - gitlab-postgresql:postgresql
-    - gitlab-redis:redis
+  image: marisbahtins/gitlab
   net: ${CUSTOM_NETWORK_NAME}
   expose:
     - "80"
@@ -70,46 +75,35 @@ gitlab:
     INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD_PLAIN}
     JENKINS_USER: ${GITLAB_JENKINS_USERNAME}
     JENKINS_PASSWORD: ${PASSWORD_JENKINS}
-    GITLAB_OMNIBUS_CONFIG: |
-     external_url "${PROTO}://${TARGET_HOST}/gitlab"
-     postgresql['enable'] = false
-     gitlab_rails['db_username'] = "${GITLAB_POSTGRES_USER}"
-     gitlab_rails['db_password'] = "${PASSWORD_POSTGRESQL}"
-     gitlab_rails['db_host'] = "gitlab-postgresql"
-     gitlab_rails['db_port'] = "5432"
-     gitlab_rails['db_database'] = "${GITLAB_POSTGRES_DB}"
-     gitlab_rails['db_adapter'] = 'postgresql'
-     gitlab_rails['db_encoding'] = 'utf8'
-     gitlab_rails['monitoring_whitelist'] = ['127.0.0.0/8', "${DOCKER_NETWORK_SUBNET_CIDR}"]
-     # Redis Configuration
-     redis['enable'] = false
-     gitlab_rails['redis_host'] = 'gitlab-redis'
-     gitlab_rails['redis_port'] = '6379'
-     # LDAP Configuration
-     gitlab_rails['ldap_enabled'] = true
-     gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
-       main:
-         label: 'LDAP'
-         host: 'ldap'
-         port: 389
-         uid: 'uid'
-         method: 'plain'
-         bind_dn: '${LDAP_MANAGER_DN}'
-         password: '${LDAP_PWD}'
-         active_directory: true
-         allow_username_or_email_login: false
-         block_auto_created_users: false
-         base: '${LDAP_FULL_DOMAIN}'
-         signin_enabled: false
-     EOS
-
-gitlab-redis:
-  container_name: gitlab-redis
-  restart: always
-  image: redis:3.2.12-alpine
-  net: ${CUSTOM_NETWORK_NAME}
-  expose:
-    - "6379"
+    DEBUG: "false"
+    DB_ADAPTER: "postgresql"
+    DB_HOST: "gitlab-postgresql"
+    DB_PORT: "5432"
+    DB_USER: ${GITLAB_POSTGRES_USER}
+    DB_PASS: ${GITLAB_POSTGRES_PASSWORD}
+    DB_NAME: ${GITLAB_POSTGRES_DB}
+    GITLAB_SECRETS_DB_KEY_BASE: "secret"
+    GITLAB_SECRETS_SECRET_KEY_BASE: "secret"
+    GITLAB_SECRETS_OTP_KEY_BASE: "secret"
+    REDIS_HOST: "gitlab-redis"
+    REDIS_PORT: "6379"
+    GITLAB_HTTPS: "false"
+    SSL_SELF_SIGNED: "false"
+    GITLAB_HOST: ${TARGET_HOST}
+    GITLAB_RELATIVE_URL_ROOT: "/gitlab"
+    GITLAB_PORT: "80"
+    GITLAB_SSH_PORT: "22"
+    GITLAB_ROOT_PASSWORD: "reperis112"
+    LDAP_ENABLED: "true"
+    LDAP_LABEL: "LDAP"
+    LDAP_HOST: "ldap"
+    LDAP_PORT: "389"
+    LDAP_UID: "uid"
+    LDAP_METHOD: "plain"
+    LDAP_BIND_DN: ${LDAP_MANAGER_DN}
+    LDAP_PASS: ${LDAP_PWD}
+    LDAP_BASE: ${LDAP_FULL_DOMAIN}
+    GITLAB_MONITORING_IP_WHITELIST: "0.0.0.0/0"
 
 sensu-uchiwa:
   container_name: sensu-uchiwa

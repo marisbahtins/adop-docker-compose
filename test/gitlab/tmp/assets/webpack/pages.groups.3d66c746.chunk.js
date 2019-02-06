@@ -1,0 +1,2 @@
+(this.webpackJsonp=this.webpackJsonp||[]).push([[60],{1022:function(e,t,s){s(42),e.exports=s(110)},110:function(e,t,s){"use strict";s.r(t);var n=s(36),c=s(38);document.addEventListener("DOMContentLoaded",function(){var e,t=document.body.dataset.page;["groups:clusters:new","groups:clusters:create_gcp","groups:clusters:create_user"].indexOf(t)>-1&&((e=document.querySelector(".gcp-signup-offer"))&&new n.a(e),Object(c.a)())})}},[[1022,1,0,2]]]);
+//# sourceMappingURL=pages.groups.3d66c746.chunk.js.map

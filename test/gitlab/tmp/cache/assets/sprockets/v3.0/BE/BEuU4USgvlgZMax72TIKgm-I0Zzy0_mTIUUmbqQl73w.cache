@@ -1,0 +1,17 @@
+{:uriI"‹file://app/assets/javascripts/ide/lib/keymap.json?type=application/json&id=a6aa924b538ded1741d9f9fb60ca58596de3f4e6c7ae15da0b5dc0c64ca6b59e:ET:load_pathI"app/assets/javascripts;T:filenameI"/app/assets/javascripts/ide/lib/keymap.json;T:	nameI"ide/lib/keymap;T:logical_pathI"ide/lib/keymap.json;T:content_typeI"application/json;T:sourceI"±[
+  {
+    "id": "file-finder",
+    "label": "File finder",
+    "bindings": ["CtrlCmd+KEY_P"],
+    "action": {
+      "name": "toggleFileFinder",
+      "params": true
+    }
+  }
+]
+;T:metadata{	:dependencieso:Set:
+@hash}
+I"environment-version;TTI"environment-paths;TTI"rails-env;TTI"@processors:type=application/json&file_type=application/json;TTI"=file-digest://app/assets/javascripts/ide/lib/keymap.json;TTF:charsetI"
+utf-8;F:digest"%b‡ž¹Â¨¹çÖwPZ“\@ÄÛ™(&à­C_p%
+öy :lengthi±:dependencies_digest"%Á’™4!ÚÅ~y™tpëñ”½‰ºe›«$¿Or…¸:idI"Ea6aa924b538ded1741d9f9fb60ca58596de3f4e6c7ae15da0b5dc0c64ca6b59e;F:
+mtimel+6;Y\
